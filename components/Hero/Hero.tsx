@@ -8,7 +8,6 @@ type Props = {
 };
 
 const Hero = ({ imgUrl, title, text }: Props) => {
-  console.log(title);
   return (
     <div className="relative w-full h-128">
       <div className="relative flex flex-col-reverse h-full max-w-7xl m-auto z-10 pb-12 text-center md:text-left">

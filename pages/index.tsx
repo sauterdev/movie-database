@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import { NextPage } from 'next';
 //fetch hook
 import { useFetchMovies } from '@/api/fetchHooks';
@@ -20,10 +21,19 @@ const Home: NextPage = () => {
   const { data, fetchNextPage, isLoading, isFetching, error } =
     useFetchMovies(query);
 
-  console.log(data);
+  const handleScroll = (e: React.UIEvent<HTMLElement>) => {
+    const { scrollTop, clientHeight, scrollHeight } = e.currentTarget;
+
+    if (scrollHeight - scrollTop < clientHeight + 1) {
+      fetchNextPage();
+    }
+  };
 
   return (
-    <main className="relative h-screen overflow-y-scroll">
+    <main
+      className="relative h-screen overflow-y-scroll"
+      onScroll={handleScroll}
+    >
       <Header setQuery={setQuery} />
       {/* Dont want hero background to display within a search */}
       {!query && data && data.pages ? (
@@ -50,21 +60,23 @@ const Home: NextPage = () => {
         {data && data.pages
           ? data.pages.map((page) =>
               page.results.map((movie) => (
-                <div key={movie.id}>
-                  <Card
-                    imgUrl={
-                      movie.poster_path
-                        ? IMAGE_BASE_URL + POSTER_SIZE + movie.poster_path
-                        : '/no_image.jpg'
-                    }
-                    title={movie.original_title}
-                  />
-                </div>
+                <Link key={movie.id} href={`/${movie.id}`}>
+                  <div className="cursor-pointer hover:opacity-80 duration-300">
+                    <Card
+                      imgUrl={
+                        movie.poster_path
+                          ? IMAGE_BASE_URL + POSTER_SIZE + movie.poster_path
+                          : '/no_image.jpg'
+                      }
+                      title={movie.original_title}
+                    />
+                  </div>
+                </Link>
               ))
             )
           : null}
       </Grid>
-      <Spinner />
+      {isLoading || isFetching ? <Spinner /> : null}
       MDMDB
     </main>
   );
