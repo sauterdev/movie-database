@@ -3,14 +3,11 @@ import { Movies } from './types';
 export const basicFetch = async <returnType>(
   endpoint: string
 ): Promise<returnType> => {
-  //   console.log('endpoint', endpoint);
   const response = await fetch(endpoint);
 
   if (!response.ok) throw new Error('');
 
   const data = await response.json();
-
-  console.log(data);
 
   return data;
 };

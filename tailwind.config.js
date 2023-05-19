@@ -6,10 +6,17 @@ module.exports = {
     './app/**/*.{js,ts,jsx,tsx,mdx}'
   ],
   theme: {
+    gridTemplateColumns: {
+      'auto-fill': 'repeat(auto-fill, minmax(200px, 1fr))'
+    },
     fontFamily: {
       raleway: ['Raleway', 'sans-serif']
     },
-    extend: {},
+    extend: {
+      height: {
+        128: '40rem'
+      }
+    }
   },
-  plugins: [],
-}
+  plugins: []
+};

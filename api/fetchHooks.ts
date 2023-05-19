@@ -6,7 +6,6 @@ import { Movies } from './types';
 
 //create hook using infinite query
 export const useFetchMovies = (search: string) => {
-  //console.log(search);
   return useInfiniteQuery(
     ['movies', search],
     ({ pageParam = 1 }) => fetchMovies(search, pageParam),
